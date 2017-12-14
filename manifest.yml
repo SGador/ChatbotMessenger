@@ -1,5 +1,5 @@
 ---
 applications:
- - name: ChatbotMessenger
-   host: ChatbotMessenger
+ - name: testBotMessenger
+   host: testBotMessenger
    memory: 128M
