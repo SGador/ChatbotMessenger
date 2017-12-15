@@ -114,7 +114,7 @@ controller.api.messenger_profile.home_url({
     "url": 'https://noodoprojyekuto.mybluemix.net/',
     "webview_height_ratio": 'tall',
     "in_test": false
-})
+});
 
 module.exports.controller = controller;
 module.exports.bot = bot;
