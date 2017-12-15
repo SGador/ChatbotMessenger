@@ -34,12 +34,16 @@ var bot = controller.spawn();
 //comment sa visual studio code
 //return bot.startConversation(message, 'Hello there, good looking fellow.');
 bot.say('Hello Fellow!');
-var reply_message = {
-		  sender_action: "typing_on"
-		}
+var message = 'test';
+bot.startTyping(message, function () {
+	  // do something here, the "is typing" animation is visible
+	});
 
-		bot.reply('typing', reply_message);
+	bot.stopTyping(message, function () {
+	  // do something here, the "is typing" animation is not visible
+	});
 
+	bot.replyWithTyping(message, 'Hello there, my friend!');
 controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {
 	bot.reply(message, message.watsonData.output.text.join('\n'));	
 });
