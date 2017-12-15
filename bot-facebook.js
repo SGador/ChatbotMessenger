@@ -38,7 +38,7 @@ var reply_message = {
 		  sender_action: "typing_on"
 		}
 
-		bot.reply(message, reply_message);
+		bot.reply('typing', reply_message);
 
 controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {
 	bot.reply(message, message.watsonData.output.text.join('\n'));	
