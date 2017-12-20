@@ -47,12 +47,6 @@ controller.hears('(.*)', 'message_received', function(bot, message) {
 	bot.reply(message, message.watsonData.output.text.join('\n'));
 });
 
-//controller.api.messenger_profile.domain_whitelist('https://noodoprojyekuto.mybluemix.net/');
-//controller.api.messenger_profile.home_url({
-//    "url": 'https://noodoprojyekuto.mybluemix.net/',
-//    "webview_height_ratio": 'tall',
-//    "in_test": false
-//});
 
 module.exports.controller = controller;
 module.exports.bot = bot;
