@@ -1,7 +1,7 @@
 {
   "name": "ChatbotMessenger",
   "version": "0.0.1",
-  "private": true,
+  "description": "depraceted till newer version",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
