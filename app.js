@@ -25,10 +25,10 @@ module.exports = function(app) {
     console.log('Facebook bot is live');
   }
   
-  storage.users.get('11111', function(error, beans){
+  /*storage.users.get('11111', function(error, beans){
 	    fname = beans.firstname;
 	  });
-
+*/
 	  // Customize your Watson Middleware object's before and after callbacks.
 	  middleware.before = function(message, conversationPayload, callback) {
 	    console.log("First Name: " + JSON.stringify(fname));
