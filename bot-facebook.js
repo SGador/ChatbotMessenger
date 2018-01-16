@@ -15,6 +15,7 @@
  */
 
 var Botkit = require('botkit');
+var clone = require('clone';)
 
 var middleware = require('botkit-middleware-watson')({
 	  username: process.env.CONVERSATION_USERNAME,
@@ -32,9 +33,8 @@ var controller = Botkit.facebookbot({
 var bot = controller.spawn();
 
 //comment sa visual studio code
-//return bot.startConversation(message, 'Hello there, good looking fellow.');
-/*bot.say('Hello Fellow!');
-controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {
+
+/*controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {
 	bot.reply(message, message.watsonData.output.text.join('\n'));	
 });*/
 
