@@ -28,7 +28,9 @@ module.exports = function(app) {
   /*storage.users.get('11111', function(error, beans){
 	    fname = beans.firstname;
 	  });
-*/
+*/storage.users.get(psid,function(error, beans){
+    fname = beans.firstname;
+});
 	  // Customize your Watson Middleware object's before and after callbacks.
 	  middleware.before = function(message, conversationPayload, callback) {
 	    console.log("First Name: " + JSON.stringify(fname));
