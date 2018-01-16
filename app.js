@@ -8,6 +8,7 @@ function checkBalance(conversationResponse, callback) {
 	  callback(null, conversationResponse);
 	}
 
+
 var middleware = require('botkit-middleware-watson')({
   username: process.env.CONVERSATION_USERNAME,
   password: process.env.CONVERSATION_PASSWORD,
