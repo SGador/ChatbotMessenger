@@ -1,4 +1,12 @@
 require('dotenv').load();
+var clone = require('clone');
+var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
+var fname;
+
+function checkBalance(conversationResponse, callback) {
+	  conversationResponse.context.user_name = fname;
+	  callback(null, conversationResponse);
+	}
 
 var middleware = require('botkit-middleware-watson')({
   username: process.env.CONVERSATION_USERNAME,
@@ -15,20 +23,26 @@ module.exports = function(app) {
     Facebook.controller.createWebhookEndpoints(app, Facebook.bot);
     console.log('Facebook bot is live');
   }
-  // Customize your Watson Middleware object's before and after callbacks.
-  middleware.before = function(message, conversationPayload, callback) {
-	//Passing values to conversation.
-	console.log('Inside the before method.  messageB=' + JSON.stringify(message, 2, null));
-	/*if(message.watsonData.intents[0].intent == 'goodbyes'){
-	 console.log('Goodbye Intent Identified');
-	}*/
-    callback(null, conversationPayload);
-  }
+  
+  storage.users.get('11111', function(error, beans){
+	    fname = beans.firstname;
+	  });
 
-  middleware.after = function(message, conversationResponse, callback) {
-	console.log("Attempting to respond");
-    // *** Call to remote service here ***
-	console.log('Inside the after method. messageB=' + JSON.stringify(message, 2, null));
-    callback(null, conversationResponse);
-  }
+	  // Customize your Watson Middleware object's before and after callbacks.
+	  middleware.before = function(message, conversationPayload, callback) {
+	    console.log("First Name: " + JSON.stringify(fname));
+	    console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
+	    callback(null, conversationPayload);
+	  };
+
+	  middleware.after = function(message, conversationResponse, callback) {
+	    if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
+	      if(conversationResponse.output.action === 'check_balance'){
+	        return checkBalance(conversationResponse, callback);
+	      }
+	    }
+	    console.log("Inside After Method: " + JSON.stringify(conversationResponse));
+	    callback(null, conversationResponse);
+	  };
+ 
 };
