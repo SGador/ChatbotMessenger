@@ -15,7 +15,7 @@
  */
 
 var Botkit = require('botkit');
-var clone = require('clone';)
+var clone = require('clone');
 
 var middleware = require('botkit-middleware-watson')({
 	  username: process.env.CONVERSATION_USERNAME,
