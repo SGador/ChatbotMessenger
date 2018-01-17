@@ -32,21 +32,6 @@ var controller = Botkit.facebookbot({
 
 var bot = controller.spawn();
 
-//comment sa visual studio code
-
-/*controller.hears('goodbyes', 'message_received', middleware.hear, function(bot,message) {
-	bot.reply(message, message.watsonData.output.text.join('\n'));	
-});*/
-
-/*controller.hears('(.*)', 'message_received', function(bot, message) {
-	var shoeType = message.match[0]; //message.match[1] to select the match
-	if(shoeType === 'Nike'){
-		return bot.reply (message, 'Nike it is!');
-	}
-	console.log("Controller Hears!!!");
-	bot.reply(message, message.watsonData.output.text.join('\n'));
-});*/
-
 var processWatsonResponse = function(bot, message){
  if(message.watsonError){
     return bot.reply(message, "I'm sorry, but for technical reasons I can't respond to your message");
@@ -54,16 +39,6 @@ var processWatsonResponse = function(bot, message){
     if(typeof message.watsonData.output !== 'undefined') {
     //send please wait to user
     bot.reply(message, message.watsonData.output.text.join('\n'));
-    
-    /*if(message.watsonData.output.action === 'check_balance'){
-      var newMessage = clone(message);
-      newMessage.text = 'hello';
-      //send to Watson
-      middleware.interpret(bot, newMessage, function(){
-        //send results to user
-        processWatsonResponse(bot, newMessage);
-       });
-     } */
     }
 };
 controller.on('message_received', processWatsonResponse);
