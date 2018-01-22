@@ -25,57 +25,54 @@ module.exports = function(app) {
     console.log('Facebook bot is live');
   }
 
-middleware.before = function(message, conversationPayload, callback) {
+  middleware.before = function(message, conversationPayload, callback) {
 	console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
 	storage.channels.get(message.channel, function(err,data){
 		if(err){
 			console.log("Warning: error retrieving channel: " + message.channel + " is: " + JSON.stringify(err));
-		}else{
-			if(!data || data === null){
-				data = {id: message.channel};
-			}
-		}
-		
-		console.log("Successfully retrieved conversation history...");
-	
-		if(data && data.date) {
-			var lastActivityDate = new Date(data.date);
-			var now = new Date();
-			var secondsElapsed = (now.getTime() - lastActivityDate.getTime())/1000;
-			console.log("Seconds Elapsed: " + secondsElapsed);
-			if(secondsElapsed > maxElapsedUnits) {
-				console.log("Should end the conversation.");
-				Facebook.endConversation(message);
-			} else {
-				console.log("Continue conversation");
-			}
-	   }
-    }
+	    } else {
+	    	if(!data || data === null){
+	          data = {id: message.channel};
+	    }
+
+	    console.log("Successfully retrieved conversation history...");
+
+	    if(data && data.date) {
+	    	var lastActivityDate = new Date(data.date);
+	        var now = new Date();
+	        var secondsElapsed = (now.getTime() - lastActivityDate.getTime())/1000;
+	        console.log("Seconds Elapsed: " + secondsElapsed);
+	        if(secondsElapsed > maxElapsedUnits) {
+	        	console.log("Should end the conversation.");
+	            Facebook.endConversation(message);
+	        } else {
+	            console.log("Continue conversation");
+	        }
+	     }
+	 }
   });
-     
 
-    callback(null, conversationPayload);
-  };
+	callback(null, conversationPayload);
+ };
 
-middleware.after = function(message, conversationResponse, callback) {
-  if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
-	 if(conversationResponse.output.action === 'check_balance'){
-	   return checkBalance(conversationResponse, callback);
-	 }
-   }
-   console.log("Inside After Method: " + JSON.stringify(conversationResponse));
+  middleware.after = function(message, conversationResponse, callback) {
+	  if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
+		  if(conversationResponse.output.action === 'check_balance'){
+	        return checkBalance(conversationResponse, callback);
+	      }
+	  }
+	  console.log("Inside After Method: " + JSON.stringify(conversationResponse));
+	  var lastActivityTime = new Date();
+	  console.log("Date: " + JSON.stringify(lastActivityTime));
 
-   var lastActivityTime = new Date();
-   console.log("Date: " + JSON.stringify(lastActivityTime));
+	  storage.channels.save({id: message.channel, date: lastActivityTime}, function(err) {
+		  if(err){
+			  console.log("Warning: error saving channel details: " + JSON.stringify(err));
+	      }else{
+	          console.log("Success saving channel detail.");
+	      }
+});
 
-   storage.channels.save({id: message.channel, date: lastActivityTime}, function(err) {
-	 if(err){
-	    console.log("Warning: error saving channel details: " + JSON.stringify(err));
-	 }
-	 else{
-	    console.log("Success saving channel detail.");
-	 }
-   });
-
-	callback(null, conversationResponse);
+callback(null, conversationResponse);
+};
 };
