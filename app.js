@@ -24,30 +24,22 @@ module.exports = function(app) {
     Facebook.controller.createWebhookEndpoints(app, Facebook.bot);
     console.log('Facebook bot is live');
   }
+
+middleware.before = function(message, conversationPayload, callback) {
+  console.log("First Name: " + JSON.stringify(fname));
+  console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
+  callback(null, conversationPayload);
+  };
+
+middleware.after = function(message, conversationResponse, callback) {
+  if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
+   if(conversationResponse.output.action === 'check_balance'){
+    return checkBalance(conversationResponse, callback);
+   }
+  }
   
- storage.users.get('11111', function(error, beans){
-	    fname = beans.firstname;
-	  });
-
- /* var psid;
-  storage.users.get(psid,function(error, beans){
-    fname = beans.firstname;
-});*/
-	  // Customize your Watson Middleware object's before and after callbacks.
-	  middleware.before = function(message, conversationPayload, callback) {
-	    console.log("First Name: " + JSON.stringify(fname));
-	    console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
-	    callback(null, conversationPayload);
-	  };
-
-	  middleware.after = function(message, conversationResponse, callback) {
-	    if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
-	      if(conversationResponse.output.action === 'check_balance'){
-	        return checkBalance(conversationResponse, callback);
-	      }
-	    }
-	    console.log("Inside After Method: " + JSON.stringify(conversationResponse));
-	    callback(null, conversationResponse);
-	  };
+console.log("Inside After Method: " + JSON.stringify(conversationResponse));
+   callback(null, conversationResponse);
+  };
  
 };
