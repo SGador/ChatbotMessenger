@@ -7,32 +7,31 @@ var maxElapsedUnits = d.getSeconds();
 var endedCondition = false;
 
 var middleware = require('botkit-middleware-watson')({
-	  username: process.env.CONVERSATION_USERNAME,
-	  password: process.env.CONVERSATION_PASSWORD,
-	  workspace_id: process.env.WORKSPACE_ID,
-	  url: process.env.CONVERSATION_URL || 'https://gateway.watsonplatform.net/conversation/api',
-	  version_date: '2017-05-26'
-	});
+	username: process.env.CONVERSATION_USERNAME,
+	password: process.env.CONVERSATION_PASSWORD,
+	workspace_id: process.env.WORKSPACE_ID,
+	url: process.env.CONVERSATION_URL || 'https://gateway.watsonplatform.net/conversation/api',
+	version_date: '2017-05-26'
+ });
 
-var controller = Botkit.facebookbot({
+ var controller = Botkit.facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
   verify_token: process.env.FB_VERIFY_TOKEN
-});
+ });
 
-var bot = controller.spawn();
+ var bot = controller.spawn();
 
-function endConversation(message){
-	  console.log("Trying to end conversation");
-	  endedCondition = true;
-	  console.log("End Condition: " + endedCondition);
-	  var endMessage = clone(message);
-	  endMessage.text = 'time out';
-	  middleware.interpret(bot, endMessage, function(){
-	    //processWatsonResponse(bot, endMessage);
-	    bot.reply(endMessage, endMessage.watsonData.output.text.join('\n'));
-	  });
+ function endConversation(message){
+	console.log("Trying to end conversation");
+	endedCondition = true;
+	console.log("End Condition: " + endedCondition);
+	var endMessage = clone(message);
+	endMessage.text = 'time out';
+	middleware.interpret(bot, endMessage, function(){
+	bot.reply(endMessage, endMessage.watsonData.output.text.join('\n'));
+ });
 	  console.log("Conversation ended");
-	}
+}
 
 var processWatsonResponse = function(bot, message){
 	  console.log("Just heard the following message: " + JSON.stringify(message));
@@ -57,7 +56,7 @@ var processWatsonResponse = function(bot, message){
 	        });
 	      }
 	  endedCondition = false;
-	};
+};
 controller.on('message_received', processWatsonResponse);
 module.exports.controller = controller;
 module.exports.bot = bot;
