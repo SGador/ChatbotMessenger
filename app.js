@@ -12,13 +12,13 @@ var middleware = require('botkit-middleware-watson')({
 });
 
 module.exports = function(app) {
-  if (process.env.USE_FACEBOOK) {
-    var Facebook = require('./bot-facebook');
-    Facebook.controller.middleware.receive.use(middleware.receive);
-    Facebook.controller.createWebhookEndpoints(app, Facebook.bot);
-    console.log('Facebook bot is live');
-  }
-  function getFBusername(path, callback) {
+	  if (process.env.USE_FACEBOOK) {
+	    var Facebook = require('./bot-facebook');
+	    Facebook.controller.middleware.receive.use(middleware.receive);
+	    Facebook.controller.createWebhookEndpoints(app, Facebook.bot);
+	    console.log('Facebook bot is live');
+	  }
+	  function getFBusername(path, callback) {
 	    return https.get({
 	        encoding: "utf8",
 	        host: 'graph.facebook.com',
@@ -35,12 +35,13 @@ module.exports = function(app) {
 	            callback(firstname);
 	        });
 	    });
-   function checkBalance(conversationResponse, callback) {
+	  }
+	  function checkBalance(conversationResponse, callback) {
 	    conversationResponse.context.user_name = userName;
 	    conversationResponse.context.fbid = fb_id;
 	    callback(null, conversationResponse);
-	}
-  middleware.before = function(message, conversationPayload, callback) {
+	  }
+	  middleware.before = function(message, conversationPayload, callback) {
 	    console.log("Inside Before Method: " + JSON.stringify(conversationPayload));	    
 	    var path = "/v2.10/"+message.user+"/?access_token="+process.env.FB_ACCESS_TOKEN;
 	    getFBusername(path, function(firstname){
@@ -63,6 +64,7 @@ module.exports = function(app) {
 	          console.log("Max Elapsed Units: " + maxElapsedUnits);
 	          console.log("Seconds Elapsed: " + secondsElapsed);
 	          if(secondsElapsed > maxElapsedUnits) {
+	            //end conversation
 	            console.log("Should end the conversation.");
 	            Facebook.endConversation(message);
 	          } else {
@@ -82,9 +84,9 @@ module.exports = function(app) {
 	      }
 	    });
 	    callback(null, conversationPayload);
- };
+	  };
 
-  middleware.after = function(message, conversationResponse, callback) {
+	  middleware.after = function(message, conversationResponse, callback) {
 	    console.log("Inside After Method: " + JSON.stringify(conversationResponse));
 	    fb_id = message.user;
 	    console.log("FB id of user: " + fb_id);
@@ -103,11 +105,12 @@ module.exports = function(app) {
 	        console.log("Success saving channel detail. Save ContextVar");
 	      }
 	    });
+
 	    if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
 	      if(conversationResponse.output.action === 'save_full_record'){
 	        console.log("Retrieveing context data for SAVE FULL RECORD");
 	      }
 	    }
 	    callback(null, conversationResponse);
-  	};
-};
+	  };
+	};
