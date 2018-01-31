@@ -4,7 +4,7 @@ var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Pas
 var d = new Date();
 d.setSeconds(5);
 var maxElapsedUnits = d.getSeconds();
-var endedCondition = false;
+var endConvo = false;
 
 var middleware = require('botkit-middleware-watson')({
 	username: process.env.CONVERSATION_USERNAME,
