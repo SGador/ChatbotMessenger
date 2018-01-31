@@ -1,7 +1,18 @@
+var express = require('express'),
+https = require('https'),
+path = require('path');
+var app = express();
 require('dotenv').load();
+app.use('/images', express.static(path.join(__dirname, 'images')));
 var clone = require('clone');
-var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband'});
-var fname;
+var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
+var maxElapsedUnits = 3000;
+console.log("Declared maxElapsedUnits: " + maxElapsedUnits + " seconds");
+var userName;
+var fb_id;
+var shoeBrand;
+var shoeType;
+var shoeColor;
 
 var middleware = require('botkit-middleware-watson')({
   username: process.env.CONVERSATION_USERNAME,
@@ -64,7 +75,6 @@ module.exports = function(app) {
 	          console.log("Max Elapsed Units: " + maxElapsedUnits);
 	          console.log("Seconds Elapsed: " + secondsElapsed);
 	          if(secondsElapsed > maxElapsedUnits) {
-	            //end conversation
 	            console.log("Should end the conversation.");
 	            Facebook.endConversation(message);
 	          } else {
