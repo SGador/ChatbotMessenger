@@ -19,7 +19,7 @@ app.listen(port, function() {
   console.log('Client server listening on port ' + port);
 });
 
-app.post('/update',function(req,res){
+/*app.post('/update',function(req,res){
 	var userid = req.body.userid;
 	var Facebook = require('./bot-facebook');
 	
@@ -30,4 +30,4 @@ app.post('/update',function(req,res){
 	if(Facebook.watsonMiddleware==null){
 		
 	}
-});
+});*/
