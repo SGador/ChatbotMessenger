@@ -129,3 +129,4 @@ controller.on('facebook_postback', function(bot, message){
 });
 module.exports.controller = controller;
 module.exports.bot = bot;
+module.exports.endConversation = endConversation;
