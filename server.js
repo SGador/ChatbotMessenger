@@ -25,9 +25,10 @@ app.post('/update',function(req,res){
 	console.log(userid);
 	if(Facebook.bot==null){
 		console.log("Facebook bot is null");
-	}
-	
+	}	
 	if(Facebook.watsonMiddleware==null){
-		
 	}
+	Facebook.watsonMiddleware.sendToWatsonAsync(Facebook.bot, msg).then(function () {
+        Facebook.processWatsonResponse(Facebook.bot, 'hello');
+      })
 });
