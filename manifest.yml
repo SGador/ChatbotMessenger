@@ -1,5 +1,5 @@
 ---
 applications:
- - name: testBotMessenger
-   host: testBotMessenger
+ - name: newBotMessenger
+   host: newBotMessenger
    memory: 128M
