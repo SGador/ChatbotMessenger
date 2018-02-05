@@ -30,5 +30,8 @@ app.post('/update',function(req,res){
 	}	
 	if(Facebook.watsonMiddleware==null){
 	}
-    Facebook.processWatsonResponse(Facebook.bot, '<watson>hello');
+
+    Facebook.watsonMiddleware.sendToWatsonAsync(Facebook.bot, "hello").then(function () {
+      Facebook.processWatsonResponse(Facebook.bot, "hello");
+    })
 });
