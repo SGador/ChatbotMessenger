@@ -22,6 +22,7 @@ app.listen(port, function() {
 app.post('/update',function(req,res){
 	var userid = req.body.userid;
 	var Facebook = require('./bot-facebook');
+	console.log("its dis");
 	console.log(userid);
 	if(Facebook.bot==null){
 		console.log("Facebook bot is null");
