@@ -28,5 +28,5 @@ app.post('/update',function(req,res){
 	}	
 	if(Facebook.watsonMiddleware==null){
 	}
-    Facebook.processWatsonResponse(Facebook.bot, "hello");
+    Facebook.processWatsonResponse(Facebook.bot, 'hello');
 });
