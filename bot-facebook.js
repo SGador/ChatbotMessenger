@@ -32,9 +32,8 @@ var middleware = require('botkit-middleware-watson')({
 	});
 	  console.log("Conversation ended");
 }
-
-var processWatsonResponse = function(bot, message){
-	console.log("Just heard the following message: " + JSON.stringify(message));
+ var processWatsonResponse = function(bot, message){
+	  console.log("Just heard the following message: " + JSON.stringify(message));
 	  if(message.watsonError){
 	    console.log("Watson Error: " + JSON.stringify(message.watsonError));
 	    console.log(message.watsonError);
@@ -44,13 +43,17 @@ var processWatsonResponse = function(bot, message){
 	    if(typeof message.watsonData.output !== 'undefined') {
 	      bot.reply(message, message.watsonData.output.text.join('\n'));
 	    }
+
 	    if(message.watsonData.output.action === 'check_balance'){
 	          var newMessage = clone(message);
 	          newMessage.text = 'check new name';
+	          //send to Watson
 	          middleware.interpret(bot, newMessage, function(){
+	            //send results to user
 	            bot.reply(newMessage, newMessage.watsonData.output.text.join('\n'));
-	          });
+	      });
 	    }
+
 	    if (message.watsonData.output.action && message.watsonData.output.action.generic_template) {
 	        console.log("Generic template.");
 	        setTimeout(function(){
@@ -73,8 +76,10 @@ var processWatsonResponse = function(bot, message){
 	        });
 	      });
 	    }
+
 	    if (message.watsonData.output.action && message.watsonData.output.action.shoe_brand_only) {
 	      console.log("Shoe Brand Only.");
+
 	      setTimeout(function(){
 	        var attachment = 
 	        {
@@ -97,8 +102,10 @@ var processWatsonResponse = function(bot, message){
 	       });
 	      });
 	    }
+
 	    if (message.watsonData.output.action && message.watsonData.output.action.display_yes_no) {
-	      console.log("Shoe Brand Only.");	     
+	      console.log("Shoe Brand Only.");
+	     
 	      setTimeout(function(){
 	        var attachment = 
 	        {
@@ -118,15 +125,70 @@ var processWatsonResponse = function(bot, message){
 	          attachment: attachment,
 	       });
 	      });
+	      
 	    }
+
+	    if (message.watsonData.output.action && message.watsonData.output.action.shoe_brand_and_type) {
+	      console.log("Shoe Brand Only.");
+	      //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
+	      setTimeout(function(){
+	        var attachment = 
+	        {
+	          "type":"template",
+	          "payload":
+	          {
+	            "template_type":"generic",
+	            "elements":[
+	              {
+	                "title":message.watsonData.output.action.shoe_brand_and_type.title,
+	                "image_url":message.watsonData.output.action.shoe_brand_and_type.image,
+	                "default_action": message.watsonData.output.action.shoe_brand_and_type.default_action,
+	                "buttons":message.watsonData.output.action.shoe_brand_and_type.buttons
+	              }
+	            ]
+	          }
+	       }
+	       bot.reply(message, {
+	          attachment: attachment,
+	       });
+	      });
+	    }
+
+	    if (message.watsonData.output.action && message.watsonData.output.action.save_full_record) {
+	      console.log("Save Full Record.");
+	      //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
+	      setTimeout(function(){
+	        var attachment = {
+	        "type":"template",
+	        "payload":{
+	          "template_type":"generic",
+	          "elements":[
+	            {
+	              "title":message.watsonData.output.action.save_full_record.title,
+	              "image_url":message.watsonData.output.action.save_full_record.image,
+	              "default_action": message.watsonData.output.action.save_full_record.default_action,
+	              "buttons":message.watsonData.output.action.save_full_record.buttons
+	            }
+	          ]
+	        }
+	      }
+	      bot.reply(message, {
+	        attachment: attachment,
+	      });
+	    });
+	  }
+
 	  }
 	  endConvo = false;
-};
-controller.on('message_received', processWatsonResponse);
-controller.on('facebook_postback', function(bot, message){
+	};
+
+	controller.on('message_received', processWatsonResponse);
+
+
+	controller.on('facebook_postback', function(bot, message){
 	  console.log("Trying to respond to facebook postback");
 	  bot.reply(message, message.payload);
-});
+	});
 module.exports.controller = controller;
 module.exports.bot = bot;
 module.exports.endConversation = endConversation;
