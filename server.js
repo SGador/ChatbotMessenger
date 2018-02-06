@@ -28,7 +28,8 @@ app.post('/update',function(req,res){
 	if(Facebook.bot==null){
 		console.log("Facebook bot is null");
 	}	
-	if(Facebook.watsonMiddleware==null){
+	if(Facebook.middleware==null){
+		console.log("Middleware is null")
 	}
 	var msg;
 	msg.watsonData.output = 'hello';
