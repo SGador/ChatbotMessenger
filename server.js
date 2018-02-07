@@ -34,5 +34,5 @@ app.post('/update',function(req,res){
 	var msg;
 	msg.watsonData.output = 'hello';
     //Facebook.processWatsonResponse(Facebook.bot, msg);
-    res.sendFile('hello');
+    res.send('hello');
 });
