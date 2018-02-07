@@ -32,7 +32,7 @@ app.post('/update',function(req,res){
 		console.log("Middleware is null")
 	}
 	var msg;
-	msg.watsonData.output = 'hello';
+	//msg.watsonData.output = 'hello';
     //Facebook.processWatsonResponse(Facebook.bot, msg);
     res.send('hello');
 });
