@@ -2,6 +2,7 @@ var crypto = require('crypto');
 
 module.exports = function verifyFacebookSignatureHeader(req, res, buf) {
   var signature = req.headers["x-hub-signature"];
+  console.log(req);
   console.log(req.body.signed_request);
   console.log(signature);
   if (!signature) {
