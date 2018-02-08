@@ -30,97 +30,110 @@ module.exports = function(app) {
 	    console.log('Facebook bot is live');
 	  }
 	  function getFBusername(path, callback) {
-	    return https.get({
-	        encoding: "utf8",
-	        host: 'graph.facebook.com',
-	        path: path
-	    }, function(response) {
-	        var body = '';
-	        response.on('data', function(d) {
-	            body += d;
-	        });
-	        response.on('end', function() {
-	            var parsed = JSON.parse(body);
-	            console.log("Parsed: " + JSON.stringify(parsed));
-	            var firstname = parsed.first_name;
-	            callback(firstname);
-	        });
-	    });
-	  }
-	  function checkBalance(conversationResponse, callback) {
-	    conversationResponse.context.user_name = userName;
-	    conversationResponse.context.fbid = fb_id;
-	    callback(null, conversationResponse);
-	  }
-	  middleware.before = function(message, conversationPayload, callback) {
-	    console.log("Inside Before Method: " + JSON.stringify(conversationPayload));	    
-	    var path = "/v2.10/"+message.user+"/?access_token="+process.env.FB_ACCESS_TOKEN;
-	    getFBusername(path, function(firstname){
-	      console.log("FB firstname "+ firstname +"\n");
-	      userName = firstname;
-	      console.log("User Name in getFBusername: " + userName);
-	    });
-	    storage.channels.get(message.channel, function(err,data){
-	      if(err){
-	        console.log("Warning: error retrieving channel: " + message.channel + " is: " + JSON.stringify(err));
-	      } else {
-	        if(!data || data === null){
-	          data = {id: message.channel};
-	        }
-	        console.log("Successfully retrieved conversation history...");
-	        if(data && data.date) {
-	          var lastActivityDate = new Date(data.date);
-	          var now = new Date();
-	          var secondsElapsed = (now.getTime() - lastActivityDate.getTime())/1000;
-	          console.log("Max Elapsed Units: " + maxElapsedUnits);
-	          console.log("Seconds Elapsed: " + secondsElapsed);
-	          if(secondsElapsed > maxElapsedUnits) {
-	            console.log("Should end the conversation.");
-	            Facebook.endConversation(message);
-	          } else {
-	            console.log("Continue conversation");
-	          }
-	        }
-	      }
-	    });
-	    var lastActivityTime = new Date();
-	    console.log("Date: " + JSON.stringify(lastActivityTime));
-	    storage.channels.save({id: message.channel, date: lastActivityTime}, function(err) {
-	      if(err){
-	        console.log("Warning: error saving channel details: " + JSON.stringify(err));
-	      }
-	      else{
-	        console.log("Success saving channel detail. Save Date");
-	      }
-	    });
-	    callback(null, conversationPayload);
-	  };
+		    return https.get({
+		        encoding: "utf8",
+		        host: 'graph.facebook.com',
+		        path: path
+		    }, function(response) {
+		        var body = '';
+		        response.on('data', function(d) {
+		            body += d;
+		        });
+		        response.on('end', function() {
+		            var parsed = JSON.parse(body);
+		            console.log("Parsed: " + JSON.stringify(parsed));
+		            var firstname = parsed.first_name;
+		            var lastname = parsed.last_name;
+		            var user_gender = parsed.gender;
+		            callback(firstname, lastname, user_gender);
+		        });
+		    });
+		  }
 
-	  middleware.after = function(message, conversationResponse, callback) {
-	    console.log("Inside After Method: " + JSON.stringify(conversationResponse));
-	    fb_id = message.user;
-	    console.log("FB id of user: " + fb_id);
-	    if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
-	      if(conversationResponse.output.action === 'check_balance'){
-	        return checkBalance(conversationResponse, callback);
-	      }
-	    }
-	    var lastActivityTime = new Date();
-	    console.log("Date: " + JSON.stringify(lastActivityTime));
-	    storage.channels.save({id: message.channel, date: lastActivityTime, contextVar: conversationResponse.context}, function(err) {
-	      if(err){
-	        console.log("Warning: error saving channel details: " + JSON.stringify(err));
-	      }
-	      else{
-	        console.log("Success saving channel detail. Save ContextVar");
-	      }
-	    });
+		  function checkBalance(conversationResponse, callback) {
+		    conversationResponse.context.user_name = userName;
+		    conversationResponse.context.fbid = fb_id;
+		    conversationResponse.context.user_lastname = userLastName;
+		    conversationResponse.context.gender = userGender;
+		    callback(null, conversationResponse);
+		  }
+		  middleware.before = function(message, conversationPayload, callback) {
+		    console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
+		    var path = "/v2.10/"+message.user+"/?access_token="+process.env.FB_ACCESS_TOKEN;
+		    getFBusername(path, function(firstname, lastname, user_gender){
+		      console.log("getFBusername");
+		      console.log("FB firstname "+ firstname +"\n");
+		      userName = firstname;
+		      userLastName = lastname;
+		      userGender = user_gender;
+		      console.log("userName: " + userName);
+		      console.log("userLastName: " + userLastName);
+		      console.log("userGender: " + userGender);
+		    });
+		    storage.channels.get(message.channel, function(err,data){
+		      if(err){
+		        console.log("Warning: error retrieving channel: " + message.channel + " is: " + JSON.stringify(err));
+		      } else {
+		        if(!data || data === null){
+		          data = {id: message.channel};
+		        }
 
-	    if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
-	      if(conversationResponse.output.action === 'save_full_record'){
-	        console.log("Retrieveing context data for SAVE FULL RECORD");
-	      }
-	    }
-	    callback(null, conversationResponse);
-	  };
+		        console.log("Successfully retrieved conversation history...");
+
+		        if(data && data.date) {
+		          var lastActivityDate = new Date(data.date);
+		          var now = new Date();
+		          var secondsElapsed = (now.getTime() - lastActivityDate.getTime())/1000;
+		          console.log("Max Elapsed Units: " + maxElapsedUnits);
+		          console.log("Seconds Elapsed: " + secondsElapsed);
+		          if(secondsElapsed > maxElapsedUnits) {
+		            //end conversation
+		            console.log("Should end the conversation.");
+		            Facebook.endConversation(message);
+		          } else {
+		            console.log("Continue conversation");
+		          }
+		        }
+		      }
+		    });
+		    var lastActivityTime = new Date();
+		    console.log("Date: " + JSON.stringify(lastActivityTime));
+		    storage.channels.save({id: message.channel, date: lastActivityTime}, function(err) {
+		      if(err){
+		        console.log("Warning: error saving channel details: " + JSON.stringify(err));
+		      }
+		      else{
+		        console.log("Success saving channel detail. Save Date");
+		      }
+		    });
+		    callback(null, conversationPayload);
+		  };
+
+		  middleware.after = function(message, conversationResponse, callback) {
+		    console.log("Inside After Method: " + JSON.stringify(conversationResponse));
+		    fb_id = message.user;
+		    console.log("FB id of user: " + fb_id);
+		    if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
+		      if(conversationResponse.output.action === 'check_balance'){
+		        return checkBalance(conversationResponse, callback);
+		      }
+		    }
+		    var lastActivityTime = new Date();
+		    console.log("Date: " + JSON.stringify(lastActivityTime));
+		    storage.channels.save({id: message.channel, date: lastActivityTime, contextVar: conversationResponse.context}, function(err) {
+		      if(err){
+		        console.log("Warning: error saving channel details: " + JSON.stringify(err));
+		      }
+		      else{
+		        console.log("Success saving channel detail. Save ContextVar");
+		      }
+		    });
+
+		    if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
+		      if(conversationResponse.output.action === 'save_full_record'){
+		        console.log("Retrieveing context data for SAVE FULL RECORD");
+		      }
+		    }
+		    callback(null, conversationResponse);
+		  };
 	};

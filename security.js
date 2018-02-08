@@ -2,9 +2,6 @@ var crypto = require('crypto');
 
 module.exports = function verifyFacebookSignatureHeader(req, res, buf) {
   var signature = req.headers["x-hub-signature"];
-  //console.log(req);
-  console.log(req.body);
-  console.log(signature);
   if (!signature) {
     console.log("Signature absent in the request: %s", JSON.stringify(req.origin));
   } else {

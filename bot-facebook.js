@@ -33,7 +33,7 @@ var middleware = require('botkit-middleware-watson')({
 	  console.log("Conversation ended");
 }
  var processWatsonResponse = function(bot, message){
-	  console.log("Just heard the following message: " + JSON.stringify(message));
+	 console.log("Just heard the following message: " + JSON.stringify(message));
 	  if(message.watsonError){
 	    console.log("Watson Error: " + JSON.stringify(message.watsonError));
 	    console.log(message.watsonError);
@@ -47,13 +47,10 @@ var middleware = require('botkit-middleware-watson')({
 	    if(message.watsonData.output.action === 'check_balance'){
 	          var newMessage = clone(message);
 	          newMessage.text = 'check new name';
-	          //send to Watson
 	          middleware.interpret(bot, newMessage, function(){
-	            //send results to user
 	            bot.reply(newMessage, newMessage.watsonData.output.text.join('\n'));
 	      });
 	    }
-
 	    if (message.watsonData.output.action && message.watsonData.output.action.generic_template) {
 	        console.log("Generic template.");
 	        setTimeout(function(){
@@ -79,7 +76,6 @@ var middleware = require('botkit-middleware-watson')({
 
 	    if (message.watsonData.output.action && message.watsonData.output.action.shoe_brand_only) {
 	      console.log("Shoe Brand Only.");
-
 	      setTimeout(function(){
 	        var attachment = 
 	        {
@@ -125,12 +121,10 @@ var middleware = require('botkit-middleware-watson')({
 	          attachment: attachment,
 	       });
 	      });
-	      
 	    }
 
 	    if (message.watsonData.output.action && message.watsonData.output.action.shoe_brand_and_type) {
 	      console.log("Shoe Brand Only.");
-	      //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
 	      setTimeout(function(){
 	        var attachment = 
 	        {
@@ -156,7 +150,6 @@ var middleware = require('botkit-middleware-watson')({
 
 	    if (message.watsonData.output.action && message.watsonData.output.action.save_full_record) {
 	      console.log("Save Full Record.");
-	      //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
 	      setTimeout(function(){
 	        var attachment = {
 	        "type":"template",
@@ -181,10 +174,7 @@ var middleware = require('botkit-middleware-watson')({
 	  }
 	  endConvo = false;
 	};
-
 	controller.on('message_received', processWatsonResponse);
-
-
 	controller.on('facebook_postback', function(bot, message){
 	  console.log("Trying to respond to facebook postback");
 	  bot.reply(message, message.payload);
