@@ -5,7 +5,7 @@ module.exports = function verifyFacebookSignatureHeader(req, res, buf) {
   console.log(req);
   console.log(signature);
   if (!signature) {
-    console.log("Signature absent in the request: %s", JSON.stringify(req));
+    console.log("Signature absent in the request: %s", JSON.stringify(req.origin));
   } else {
     // Get the facebook signature
 	console.log(signature);
