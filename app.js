@@ -9,6 +9,8 @@ var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Pas
 var maxElapsedUnits = 3000;
 console.log("Declared maxElapsedUnits: " + maxElapsedUnits + " seconds");
 var userName;
+var userLastName;
+var userGender;
 var fb_id;
 var shoeBrand;
 var shoeType;
