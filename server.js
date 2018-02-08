@@ -21,9 +21,8 @@ app.listen(port, function() {
 });
 
 app.post('/update',function(req,res){
-	console.log(req);
-	var context = req;
-	var userid = JSON.stringify(context.psid);
+	console.log(req.body.psid);
+	var userid = req.body.psid;
 	var Facebook = require('./bot-facebook');
 	console.log("its dis")
 	console.log(userid);
