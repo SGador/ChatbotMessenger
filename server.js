@@ -32,13 +32,8 @@ app.post('/update',function(req,res){
 	if(Facebook.middleware==null){
 		console.log("Middleware is null")
 	}
-//	var msg = {};
-//	msg.text = 'hello';
-	console.log(JSON.stringify(app.middleware));
-	console.log(JSON.stringify(app.replyMessage));
-	var msg = app.replyMessage;
-	console.log(JSON.stringify(msg));
-	//msg.watsonData.output = 'hello';
+	var msg = {};
+	app(app);
     Facebook.processWatsonResponse(Facebook.bot, msg);
     res.send('200');
 });
