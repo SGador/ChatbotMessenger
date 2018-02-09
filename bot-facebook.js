@@ -5,6 +5,7 @@ var d = new Date();
 d.setSeconds(5);
 var maxElapsedUnits = d.getSeconds();
 var endConvo = false;
+var replyMessage;
 
 var controller = Botkit.facebookbot({
   access_token: process.env.FB_ACCESS_TOKEN,
