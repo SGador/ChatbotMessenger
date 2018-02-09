@@ -16,6 +16,11 @@ var shoeBrand;
 var shoeType;
 var shoeColor;
 var replyMessage;
+var cors = require('cors');
+app.use(cors());
+app.use(bodyParser.json({
+  verify: verify
+}));
 
 var middleware = require('botkit-middleware-watson')({
   username: process.env.CONVERSATION_USERNAME,

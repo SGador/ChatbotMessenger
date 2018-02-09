@@ -33,6 +33,7 @@ app.post('/update',function(req,res){
 		console.log("Middleware is null")
 	}
 	var msg = {};
+	req.payload = 'hello';
 	app(req);
     //Facebook.processWatsonResponse(Facebook.bot, msg);
     res.send('200');
