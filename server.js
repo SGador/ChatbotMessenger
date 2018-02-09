@@ -4,6 +4,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var verify = require('./security');
 var app = express();
+var clone = require('clone');
 var cors = require('cors');
 app.use(cors());
 app.use(bodyParser.json({
@@ -33,7 +34,7 @@ app.post('/update',function(req,res){
 	}
 //	var msg = {};
 //	msg.text = 'hello';
-	var msg =app.middleware.before;
+	var msg = clone(app.middleware.before);
 	console.log(JSON.replyMessage);
 	//var msg = app.replyMessage;
 	console.log(JSON.stringify(msg));
