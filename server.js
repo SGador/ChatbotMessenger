@@ -37,7 +37,7 @@ app.post('/update',function(req,res){
 	var test = {};
 	test.req = req;
 	test.res = res;
-	app(test);
+	app(req,res);
     //Facebook.processWatsonResponse(Facebook.bot, msg);
     res.send('200');
 });
