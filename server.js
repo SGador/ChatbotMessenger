@@ -33,9 +33,8 @@ app.post('/update',function(req,res){
 	}
 //	var msg = {};
 //	msg.text = 'hello';
+	console.log(JSON.replyMessage);
 	var msg = app.replyMessage;
-	console.log(JSON.stringify(msg));
-	msg.input.text = 'hello';
 	console.log(JSON.stringify(msg));
 	//msg.watsonData.output = 'hello';
     Facebook.processWatsonResponse(Facebook.bot, msg);
