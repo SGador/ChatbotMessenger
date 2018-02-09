@@ -47,7 +47,7 @@ var processWatsonResponse = function(bot, message){
 
     if(message.watsonData.output.action === 'check_balance'){
           var newMessage = clone(message);
-          newMessage.text = 'check new name';
+          newMessage.text = 'Hello';
           middleware.interpret(bot, newMessage, function(){
             bot.reply(newMessage, newMessage.watsonData.output.text.join('\n'));
       });
