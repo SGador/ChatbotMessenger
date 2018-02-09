@@ -187,3 +187,4 @@ module.exports.controller = controller;
 module.exports.bot = bot;
 module.exports.endConversation = endConversation;
 module.exports.processWatsonResponse = processWatsonResponse;
+module.exports.middleware = middleware;
