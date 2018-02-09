@@ -16,6 +16,7 @@ var shoeBrand;
 var shoeType;
 var shoeColor;
 var replyMessage;
+var bodyParser = require('body-parser');
 var cors = require('cors');
 app.use(cors());
 app.use(bodyParser.json({
