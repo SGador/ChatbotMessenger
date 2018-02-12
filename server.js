@@ -79,5 +79,5 @@ app.post('/update', function (req, res) {
 
 	  });
 	  res.set('X-Frame-Options','ALLOW-FROM https://kariteun-shopping.mybluemix.net/');
-	  res.send('hello')));
+	  res.send('hello');
 	});
