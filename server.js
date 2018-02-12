@@ -52,7 +52,7 @@ app.post('/update', function (req, res) {
 	    console.log("Facebook bot is null");
 	 
 	  if (Facebook.watsonMiddleware == null){
-	    console.log("Facebook bot is null");}
+	    console.log("Middleware is null");}
 	  /*logs.view('log_user', 'by_userid', {
 	    key: [userid], include_docs: true
 	  }, function (err, res) {
