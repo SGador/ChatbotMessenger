@@ -52,10 +52,10 @@ app.post('/update', function (req, res) {
 	 
 	  if (Facebook.watsonMiddleware == null)
 	    console.log("Facebook bot is null");
-	  logs.view('log_user', 'by_userid', {
+	  /*logs.view('log_user', 'by_userid', {
 	    key: [userid], include_docs: true
 	  }, function (err, res) {
-	    if (!err) {
+	    if (!err) {*/
 	     
 	      if (res.rows.length != 0) {
 	        console.log("Go here" + res.rows.length);
@@ -72,10 +72,10 @@ app.post('/update', function (req, res) {
 	        
 	          Facebook.processWatsonResponse(Facebook.bot, msg);
 	      }
-	    }
+	    /*}
 	    else {
 	      console.log(err);
-	    }
+	    }*/
 
 	  });
 	  res.set('X-Frame-Options','ALLOW-FROM https://kariteun-shopping.mybluemix.net/');
