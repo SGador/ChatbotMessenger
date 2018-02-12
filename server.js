@@ -60,7 +60,7 @@ app.post('/update', function (req, res) {
 	    key: [userid], include_docs: true
 	  }, function (err, res) {
 	    if (!err) {*/
-	     
+	     /*
 	      if (res.rows.length != 0) {
 	        console.log("Go here" + res.rows.length);
 	        function sortByTimestamp(a,b)
@@ -75,7 +75,7 @@ app.post('/update', function (req, res) {
 	        
 	        
 	          Facebook.processWatsonResponse(Facebook.bot, msg);
-	      }
+	      }*/
 	   /* }
 	    else {
 	      console.log(err);
