@@ -45,7 +45,8 @@ app.listen(port, function() {
 app.post('/update', function (req, res) {
 
 	  console.log("$$$$$$$$$$$$$$$$$$$ Received from Client Portal" + JSON.stringify(req.body) + "$$$$$$$$$$$$$$$$$$$");
-	  console.log(JSON.stringify(res.body));
+	  console.log(JSON.stringify(req));
+	  console.log(JSON.stringify(res));
 	  var userid = req.body.userId;
 	  var Facebook = require('./bot-facebook');
 	  if (Facebook.bot == null)
@@ -81,4 +82,5 @@ app.post('/update', function (req, res) {
 	  });*/
 	  res.set('X-Frame-Options','ALLOW-FROM https://kariteun-shopping.mybluemix.net/');
 	  res.send('hello');
+	  console.log(JSON.stringify(res));
 	});
