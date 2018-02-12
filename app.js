@@ -34,7 +34,6 @@ var middleware = require('botkit-middleware-watson')({
 });
 
 module.exports = function(app) {
-	  console.log(JSON.stringify(app));
 	  if (process.env.USE_FACEBOOK) {
 	    var Facebook = require('./bot-facebook');
 	    Facebook.controller.middleware.receive.use(middleware.receive);
@@ -71,6 +70,7 @@ module.exports = function(app) {
 		  }
 		  middleware.before = function(message, conversationPayload, callback) {
 			  console.log(JSON.stringify(app));
+			  console.log(JSON.stringify(message));
 		    console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
 		    replyMessage = clone(message);
 		    var path = "/v2.10/"+message.user+"/?access_token="+process.env.FB_ACCESS_TOKEN;
