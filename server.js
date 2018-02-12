@@ -84,5 +84,5 @@ app.post('/update', function (req, res) {
 	  res.set('X-Frame-Options','ALLOW-FROM https://kariteun-shopping.mybluemix.net/');
 	  res.send('hello');
 	  console.log("------------------------------------------------------");
-	  console.log(JSON.stringify(res));
+	  console.log(res);
 	});
