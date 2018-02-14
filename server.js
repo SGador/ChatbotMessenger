@@ -60,9 +60,9 @@ app.post('/update', function (req, res) {
 	  msg.user = req.body.psid;
 	  msg.timestamp = req.body.timestamp;
 	  msg.watsonData = {};
-	  //msg.watsonData.output = {};
-	  //msg.watsonData.output = 'test';
-	  msg.watsonData.output.action = 'generic_template';
+	  msg.watsonData.output = {};
+	  //msg.watsonData.output = 'action';
+	  msg.watsonData.output.action ={ generic_template: { title: 'Please choose', buttons: [ [Object], [Object] ] } };
 	 
 	 
 	  Facebook.processWatsonResponse(Facebook.bot, msg);
