@@ -42,7 +42,7 @@ app.listen(port, function() {
     res.send('200');
 });*/
 
-/*app.post('/update', function (req, res) {
+app.post('/update', function (req, res) {
 
 	  console.log("$$$$$$$$$$$$$$$$$$$ Received from Client Portal" + JSON.stringify(req.body) + "$$$$$$$$$$$$$$$$$$$");
 	  console.log(req);
@@ -51,12 +51,18 @@ app.listen(port, function() {
 	  var userid = req.body.userId;
 	  console.log(userid);
 	  var Facebook = require('./bot-facebook');
-	  if (Facebook.bot == null)
+	  if (Facebook.bot == null){
 	    console.log("Facebook bot is null");
-	 
+	  }
 	  if (Facebook.middleware == null){
 	    console.log("Middleware is null");}
-	  logs.view('log_user', 'by_userid', {
+	  var msg = {};
+	  msg.text = 'hello';
+	  msg.channel = req.body.psid;
+	  msg.user = req.body.psid;
+	  msg.timestamp = req.body.psid;
+	  msg.watsonData = null;
+	  /*logs.view('log_user', 'by_userid', {
 	    key: [userid], include_docs: true
 	  }, function (err, res) {
 	    if (!err) {
@@ -73,17 +79,17 @@ app.listen(port, function() {
 	        console.log("The text is "+ msg.text +"The timestamp is "+ msg.timestamp);
 	        msg.text = 'received from client portal';
 	        
-	        
+	        */
 	          Facebook.processWatsonResponse(Facebook.bot, msg);
-	      }
+	     /* }
 	    }
 	    else {
 	      console.log(err);
-	    }
+	    }*/
 
 	  });
 	  res.set('X-Frame-Options','ALLOW-FROM https://kariteun-shopping.mybluemix.net/');
 	  res.send('hello');
 	  console.log("------------------------------------------------------");
 	  console.log(res);
-	});*/
+	});
