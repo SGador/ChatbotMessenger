@@ -28,6 +28,14 @@ function endConversation(message){
   console.log("End Condition: " + endConvo);
   var endMessage = clone(message);
   endMessage.text = 'time out';
+  request('https://kariteun-shopping.mybluemix.net/fblogout/' + endMessage.channel, function (err, response, body) {
+	    console.log("Processing request");
+	    console.log("EndMessage Channel")
+	    console.log(endMessage.channel);
+	    console.log('error: ', err); // Handle the error if one occurred
+	    console.log('statusCode: ', response && response.statusCode); // Check 200 or such
+	    console.log('body ', body);
+  });
   middleware.interpret(bot, endMessage, function(){
     bot.reply(endMessage, endMessage.watsonData.output.text.join('\n'));
   });
