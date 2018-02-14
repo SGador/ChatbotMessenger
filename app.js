@@ -74,6 +74,7 @@ module.exports = function(app) {
 		  }
 		  middleware.before = function(message, conversationPayload, callback) {
 			  console.log('before');
+			  console.log(app);
 			  console.log(JSON.stringify(app));
 			  console.log(callback);
 			  console.log(JSON.stringify(callback));
