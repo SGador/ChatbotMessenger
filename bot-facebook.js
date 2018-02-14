@@ -65,6 +65,7 @@ function endConversation(message){
 }
 
 var processWatsonResponse = function(bot, message){
+	console.log('bot-facebook');
   console.log("Just heard the following message: " + JSON.stringify(message));
   if(message.watsonError){
     console.log("Watson Error: " + JSON.stringify(message.watsonError));
@@ -123,3 +124,4 @@ controller.on('facebook_postback', function(bot, message){
 module.exports.controller = controller;
 module.exports.bot = bot;
 module.exports.endConversation = endConversation;
+module.exports.middleware = middleware;
