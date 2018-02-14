@@ -60,7 +60,7 @@ app.post('/update', function (req, res) {
 	  msg.user = req.body.psid;
 	  msg.timestamp = req.body.psid;
 	 msg.watsonData = [];
-	 msg.watsonData.output.action = [];
+	 msg.watsonData.output.action = 'generic_template';
 	 msg.watsonData.output = 'test';
 	 
 	  Facebook.processWatsonResponse(Facebook.bot, msg);
