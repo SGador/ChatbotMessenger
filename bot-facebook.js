@@ -66,6 +66,7 @@ function endConversation(message){
 
 var processWatsonResponse = function(bot, message){
   console.log("Just heard the following message: " + JSON.stringify(message));
+  console.log(message.watsonData.output.action);
   if(message.watsonError){
     console.log("Watson Error: " + JSON.stringify(message.watsonError));
     console.log(message.watsonError);
