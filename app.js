@@ -75,6 +75,8 @@ module.exports = function(app) {
 		  middleware.before = function(message, conversationPayload, callback) {
 			  console.log('before');
 			  console.log(JSON.stringify(app));
+			  console.log(callback);
+			  console.log(JSON.stringify(callback));
 			  console.log(JSON.stringify(message));
 		    console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
 		    replyMessage = clone(message);
