@@ -60,7 +60,7 @@ app.post('/update', function (req, res) {
 	  msg.user = req.body.psid;
 	  msg.timestamp = req.body.timestamp;
 	  msg.watsonData = {};
-	  msg.watsonData.output = {};
+	  //msg.watsonData.output = {};
 	  //msg.watsonData.output = 'test';
 	  msg.watsonData.output.action = 'generic_template';
 	 
