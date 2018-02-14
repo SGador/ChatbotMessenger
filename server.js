@@ -45,9 +45,7 @@ app.listen(port, function() {
 app.post('/update', function (req, res) {
 
 	  console.log("$$$$$$$$$$$$$$$$$$$ Received from Client Portal" + JSON.stringify(req.body) + "$$$$$$$$$$$$$$$$$$$");
-	  console.log(req);
 	  console.log("------------------------------------------------------");
-	  console.log(res);
 	  var userid = req.body.userId;
 	  console.log(userid);
 	  var Facebook = require('./bot-facebook');
@@ -62,34 +60,10 @@ app.post('/update', function (req, res) {
 	  msg.user = req.body.psid;
 	  msg.timestamp = req.body.psid;
 	  msg.watsonData = null;
-	  /*logs.view('log_user', 'by_userid', {
-	    key: [userid], include_docs: true
-	  }, function (err, res) {
-	    if (!err) {
+	 
+	  Facebook.processWatsonResponse(Facebook.bot, msg);
 	     
-	      if (res.rows.length != 0) {
-	        console.log("Go here" + res.rows.length);
-	        function sortByTimestamp(a,b)
-	        {
-	          return ((a.value.message.timestamp < b.value.message.timestamp) ? 1 : ((a.value.message.timestamp > b.value.message.timestamp) ? -1 : 0));
-	        }
-	        var sortedArray = (res.rows).sort(sortByTimestamp);
-	       
-	        var msg = sortedArray[0].value.message;
-	        console.log("The text is "+ msg.text +"The timestamp is "+ msg.timestamp);
-	        msg.text = 'received from client portal';
-	        
-	        */
-	          Facebook.processWatsonResponse(Facebook.bot, msg);
-	     /* }
-	    }
-	    else {
-	      console.log(err);
-	    }*/
-
-	  });
 	  res.set('X-Frame-Options','ALLOW-FROM https://kariteun-shopping.mybluemix.net/');
 	  res.send('hello');
 	  console.log("------------------------------------------------------");
-	  console.log(res);
 	});
