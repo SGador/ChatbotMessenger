@@ -42,25 +42,25 @@ app.listen(port, function() {
     res.send('200');
 });*/
 
-app.post('/update', function (req, res) {
+/*app.post('/update', function (req, res) {
 
 	  console.log("$$$$$$$$$$$$$$$$$$$ Received from Client Portal" + JSON.stringify(req.body) + "$$$$$$$$$$$$$$$$$$$");
-/*	  console.log(req);
+	  console.log(req);
 	  console.log("------------------------------------------------------");
-	  console.log(res);*/
+	  console.log(res);
 	  var userid = req.body.userId;
 	  console.log(userid);
 	  var Facebook = require('./bot-facebook');
 	  if (Facebook.bot == null)
 	    console.log("Facebook bot is null");
 	 
-	  /*if (Facebook.middleware == null){
+	  if (Facebook.middleware == null){
 	    console.log("Middleware is null");}
 	  logs.view('log_user', 'by_userid', {
 	    key: [userid], include_docs: true
 	  }, function (err, res) {
-	    if (!err) {*/
-	     /*
+	    if (!err) {
+	     
 	      if (res.rows.length != 0) {
 	        console.log("Go here" + res.rows.length);
 	        function sortByTimestamp(a,b)
@@ -75,15 +75,15 @@ app.post('/update', function (req, res) {
 	        
 	        
 	          Facebook.processWatsonResponse(Facebook.bot, msg);
-	      }*/
-	   /* }
+	      }
+	    }
 	    else {
 	      console.log(err);
 	    }
 
-	  });*/
+	  });
 	  res.set('X-Frame-Options','ALLOW-FROM https://kariteun-shopping.mybluemix.net/');
 	  res.send('hello');
-	  /*console.log("------------------------------------------------------");
-	  console.log(res);*/
-	});
+	  console.log("------------------------------------------------------");
+	  console.log(res);
+	});*/
