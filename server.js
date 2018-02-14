@@ -59,8 +59,10 @@ app.post('/update', function (req, res) {
 	  msg.channel = req.body.psid;
 	  msg.user = req.body.psid;
 	  msg.timestamp = req.body.psid;
-	 msg.watsonData.output.action = 'generic_template';
-	 msg.watsonData.output = 'test';
+	  msg.watsonData.output = {};
+	  msg.watsonData.output = 'test';
+	  msg.watsonData.output.action = 'generic_template';
+	 
 	 
 	  Facebook.processWatsonResponse(Facebook.bot, msg);
 	     
