@@ -58,9 +58,9 @@ app.post('/update', function (req, res) {
 	  msg.text = 'hello';
 	  msg.channel = req.body.psid;
 	  msg.user = req.body.psid;
-	  msg.timestamp = req.body.psid;
+	  msg.timestamp = req.body.timestamp;
 	  msg.watsonData = {};
-	  mas.watsonData.output = {};
+	  msg.watsonData.output = {};
 	  msg.watsonData.output = 'test';
 	  msg.watsonData.output.action = 'generic_template';
 	 
