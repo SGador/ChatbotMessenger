@@ -35,6 +35,7 @@ var middleware = require('botkit-middleware-watson')({
 
 module.exports = function(app) {
 	  console.log('app.js');
+	  console.log(JSON.stringify(app));
 	  if (process.env.USE_FACEBOOK) {
 	    var Facebook = require('./bot-facebook');
 	    Facebook.controller.middleware.receive.use(middleware.receive);
