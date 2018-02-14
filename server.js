@@ -62,7 +62,7 @@ app.post('/update', function (req, res) {
 	  msg.watsonData = {};
 	  msg.watsonData.output = {};
 	  msg.watsonData.output.action ={generic_template:{}};
-	  msg.watsonData.output.text = ["Transaction Confirmed"];
+	  msg.watsonData.output.text = ["Transaction Confirmed.","Have a nice day!"];
 	 
 	 
 	  Facebook.processWatsonResponse(Facebook.bot, msg);
