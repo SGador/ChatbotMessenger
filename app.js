@@ -34,6 +34,7 @@ var middleware = require('botkit-middleware-watson')({
 });
 
 module.exports = function(app) {
+	  console.log('app.js');
 	  if (process.env.USE_FACEBOOK) {
 	    var Facebook = require('./bot-facebook');
 	    Facebook.controller.middleware.receive.use(middleware.receive);
@@ -41,6 +42,7 @@ module.exports = function(app) {
 	    console.log('Facebook bot is live');
 	  }
 	  function getFBusername(path, callback) {
+		   console.log('getFbusername');
 		    return https.get({
 		        encoding: "utf8",
 		        host: 'graph.facebook.com',
@@ -62,6 +64,7 @@ module.exports = function(app) {
 		  }
 
 		  function checkBalance(conversationResponse, callback) {
+			  console.log('checkbalance');
 		    conversationResponse.context.user_name = userName;
 		    conversationResponse.context.fbid = fb_id;
 		    conversationResponse.context.user_lastname = userLastName;
@@ -69,6 +72,7 @@ module.exports = function(app) {
 		    callback(null, conversationResponse);
 		  }
 		  middleware.before = function(message, conversationPayload, callback) {
+			  console.log('before');
 			  console.log(JSON.stringify(app));
 			  console.log(JSON.stringify(message));
 		    console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
@@ -124,6 +128,7 @@ module.exports = function(app) {
 		  };
 
 		  middleware.after = function(message, conversationResponse, callback) {
+			 console.log('after');
 		    console.log("Inside After Method: " + JSON.stringify(conversationResponse));
 		    fb_id = message.user;
 		    console.log("FB id of user: " + fb_id);
