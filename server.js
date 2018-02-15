@@ -31,9 +31,7 @@ app.post('/update', function (req, res) {
 	  if (Facebook.middleware == null){
 	    console.log("Middleware is null");}
 	  var msg = {};
-	 /* msg.workspace_id = process.env.WORKSPACE_ID;
-	  msg.text = 'hello';*/
-	  msg = {"text":"<watson>hello","channel":req.body.psid,"user":req.body.psid,"timestamp":req.body.timestamp,/*"watsonData":{"output":{"action":{},"text":["Transaction Confirmed.","Have a nice day!"]}}*/}
+	  msg = {"text":"<watson>confirmation message","channel":req.body.psid,"user":req.body.psid,"timestamp":req.body.timestamp}
 	  /*msg.text = 'hello';
 	  msg.channel = req.body.psid;
 	  msg.user = req.body.psid;
