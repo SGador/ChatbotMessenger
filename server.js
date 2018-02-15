@@ -31,7 +31,7 @@ app.post('/update', function (req, res) {
 	  if (Facebook.middleware == null){
 	    console.log("Middleware is null");}
 	  var msg = {};
-	  msg = {"text":"<watson>confirmation message","channel":req.body.psid,"user":req.body.psid,"timestamp":req.body.timestamp}
+	  msg = {"text":"<watson>goodbye","channel":req.body.psid,"user":req.body.psid,"timestamp":req.body.timestamp}
 
       Facebook.middleware.sendToWatsonAsync(Facebook.bot, msg).then(function () {
         Facebook.processWatsonResponse(Facebook.bot, msg)
