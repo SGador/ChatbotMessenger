@@ -35,7 +35,7 @@ app.post('/update', function (req, res) {
 	  }
 	  var msg = {};
 	  var text;
-	  var orderData = (";" + req.body.orderData.orderid + ";" + req.body.orderData.address + ";" + req.body.orderData.totalPrice);
+	  var orderData = (";" + req.body.orderData.orderId + ";" + req.body.orderData.address + ";" + req.body.orderData.totalPrice);
 	  if (req.body.text == "ADDTOCART"){
 		  text = "<watson> add to cart" + orderData;
 	  }else if(req.body.text == "CHECKOUT"){
