@@ -38,7 +38,7 @@ app.post('/update', function (req, res) {
 	  if (req.body.text == "ADDTOCART"){
 		  text = "<watson> add to cart";
 	  }else if(req.body.text == "CHECKOUT"){
-		  test = "<watson> transaction confirmation";
+		  text = "<watson> transaction confirmation";
 	  }
 	  msg = {"text":text,"channel":userid,"user":userid,"timestamp":ts,"orderdata":req.body.orderData};
 
