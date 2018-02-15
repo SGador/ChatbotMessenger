@@ -31,7 +31,8 @@ app.post('/update', function (req, res) {
 	  if (Facebook.middleware == null){
 	    console.log("Middleware is null");}
 	  var msg = {};
-	  msg = {"text":"hello","channel":req.body.psid,"user":req.body.psid,"timestamp":req.body.timestamp,"watsonData":{"output":{"action":{},"text":["Transaction Confirmed.","Have a nice day!"]}}}
+	  msg.text = 'hello';
+	  //msg = {"text":"hello","channel":req.body.psid,"user":req.body.psid,"timestamp":req.body.timestamp,"watsonData":{"output":{"action":{},"text":["Transaction Confirmed.","Have a nice day!"]}}}
 	  /*msg.text = 'hello';
 	  msg.channel = req.body.psid;
 	  msg.user = req.body.psid;
