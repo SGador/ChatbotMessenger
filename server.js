@@ -33,7 +33,7 @@ app.post('/update', function (req, res) {
 	  var msg = {};
 	 /* msg.workspace_id = process.env.WORKSPACE_ID;
 	  msg.text = 'hello';*/
-	  msg = {"text":"hello","channel":req.body.psid,"user":req.body.psid,"timestamp":req.body.timestamp,/*"watsonData":{"output":{"action":{},"text":["Transaction Confirmed.","Have a nice day!"]}}*/}
+	  msg = {"text":"<watson>hello","channel":req.body.psid,"user":req.body.psid,"timestamp":req.body.timestamp,/*"watsonData":{"output":{"action":{},"text":["Transaction Confirmed.","Have a nice day!"]}}*/}
 	  /*msg.text = 'hello';
 	  msg.channel = req.body.psid;
 	  msg.user = req.body.psid;
