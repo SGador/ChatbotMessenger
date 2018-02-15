@@ -34,7 +34,13 @@ app.post('/update', function (req, res) {
 	    console.log("Middleware is null");
 	  }
 	  var msg = {};
-	  msg = {"text":"<watson> transaction confirmation","channel":userid,"user":userid,"timestamp":ts,"orderdata":req.body.orderData};
+	  var text;
+	  if (req.body.text == "ADDTOCART"){
+		  text = "<watson> add to cart";
+	  }else if(req.body.text == "CHECKOUT"){
+		  test = "<watson> transaction confirmation";
+	  }
+	  msg = {"text":text,"channel":userid,"user":userid,"timestamp":ts,"orderdata":req.body.orderData};
 
       Facebook.middleware.sendToWatsonAsync(Facebook.bot, msg).then(function () {
         Facebook.processWatsonResponse(Facebook.bot, msg);
