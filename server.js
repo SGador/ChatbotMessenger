@@ -61,7 +61,7 @@ app.post('/update', function (req, res) {
 	  msg.timestamp = req.body.timestamp;
 	  msg.watsonData = {};
 	  msg.watsonData.output = {};
-	  msg.watsonData.output.action ={generic_template:{}};
+	  msg.watsonData.output.action ={/*generic_template:{}*/};
 	  msg.watsonData.output.text = ["Transaction Confirmed.","Have a nice day!"];
 	 
 	 
