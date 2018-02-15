@@ -66,7 +66,7 @@ var processWatsonResponse = function(bot, message){
             bot.reply(newMessage, newMessage.watsonData.output.text.join('\n'));
       });
     }
-
+    
     if (message.watsonData.output.action && message.watsonData.output.action.generic_template) {
         console.log("Generic template.");
         setTimeout(function(){
@@ -94,12 +94,10 @@ var processWatsonResponse = function(bot, message){
 };
 
 controller.on('message_received', processWatsonResponse);
-
 controller.on('facebook_postback', function(bot, message){
   console.log("Trying to respond to facebook postback");
   bot.reply(message, message.payload);
 });
-
 module.exports.controller = controller;
 module.exports.bot = bot;
 module.exports.endConversation = endConversation;
