@@ -1,7 +1,6 @@
 var express = require('express'),
 https = require('https'),
 path = require('path');
-
 var app = express();
 require('dotenv').load();
 app.use('/images', express.static(path.join(__dirname, 'images')));
@@ -16,7 +15,6 @@ var fb_id;
 var shoeBrand;
 var shoeType;
 var shoeColor;
-var replyMessage;
 
 var middleware = require('botkit-middleware-watson')({
   username: process.env.CONVERSATION_USERNAME,
@@ -64,7 +62,6 @@ module.exports = function(app) {
 
   middleware.before = function(message, conversationPayload, callback) {
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
-    replyMessage = clone(message);
     console.log("replyMessage: " + JSON.stringify(replyMessage));
     var path = "/v2.10/"+message.user+"/?access_token="+process.env.FB_ACCESS_TOKEN;
     console.log("PATH: " + path);
@@ -86,9 +83,7 @@ module.exports = function(app) {
         if(!data || data === null){
           data = {id: message.channel};
         }
-
         console.log("Successfully retrieved conversation history...");
-
         if(data && data.date) {
           var lastActivityDate = new Date(data.date);
           var now = new Date();
@@ -120,8 +115,7 @@ module.exports = function(app) {
   middleware.after = function(message, conversationResponse, callback) {
     console.log("Inside After Method: " + JSON.stringify(conversationResponse));
     fb_id = message.user;
-    console.log("FB id of user: " + fb_id);
-    
+    console.log("FB id of user: " + fb_id);    
     checkBalance(conversationResponse, callback);
     console.log("Check Balance is called");
 
@@ -143,5 +137,3 @@ module.exports = function(app) {
     callback(null, conversationResponse);
   };
 };
-
-module.exports.replyMessage = replyMessage;

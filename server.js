@@ -24,19 +24,21 @@ app.post('/update', function (req, res) {
 	  console.log("$$$$$$$$$$$$$$$$$$$ Received from Client Portal" + JSON.stringify(req.body) + "$$$$$$$$$$$$$$$$$$$");
 	  console.log("------------------------------------------------------");
 	  var userid = req.body.userId;
+	  var ts = req.body.timestamp;
 	  var Facebook = require('./bot-facebook');
 	  if (Facebook.bot == null){
 	    console.log("Facebook bot is null");
 	  }
 	  if (Facebook.middleware == null){
-	    console.log("Middleware is null");}
+	    console.log("Middleware is null");
+	  }
 	  var msg = {};
-	  msg = {"text":"<watson> goodbye","channel":req.body.psid,"user":req.body.psid,"timestamp":req.body.timestamp}
+	  msg = {"text":"<watson> transaction confirmation","channel":userid,"user":userid,"timestamp":ts};
 
       Facebook.middleware.sendToWatsonAsync(Facebook.bot, msg).then(function () {
-        Facebook.processWatsonResponse(Facebook.bot, msg)
+        Facebook.processWatsonResponse(Facebook.bot, msg);
       })
 	  res.set('X-Frame-Options','ALLOW-FROM https://kariteun-shopping.mybluemix.net/');
-	  res.send('hello');
+	  res.send('200 Transaction Complete');
 	  console.log("------------------------------------------------------");
 	});
