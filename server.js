@@ -35,9 +35,9 @@ app.post('/update', function (req, res) {
 	  }
 	  var msg = {};
 	  var text;
-	  var orderData = (";" + req.body.orderData.orderId + ";" + req.body.orderData.address + ";" + req.body.orderData.totalPrice);
+	  var orderData = (";" + JSON.stringify(req.body.orderData.orderId) + ";" + JSON.stringify(req.body.orderData.address) + ";" + JSON.stringify(req.body.orderData.totalPrice));
 	  if (req.body.text == "ADDTOCART"){
-		  text = "<watson> add to cart" + orderData;
+		  text = "<watson> add to cart";
 	  }else if(req.body.text == "CHECKOUT"){
 		  text = "<watson> transaction confirmation" + orderData;
 	  }
