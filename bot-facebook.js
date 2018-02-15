@@ -1,24 +1,8 @@
-/**
- * Copyright 2016 IBM Corp. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 var Botkit = require('botkit');
 var request = require('request');
 var clone = require('clone');
 var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
-//var storage = require('./brix_dep/botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
 var d = new Date();
 d.setSeconds(5);
 var maxElapsedUnits = d.getSeconds();
@@ -47,16 +31,14 @@ function endConversation(message){
   var endMessage = clone(message);
   endMessage.text = 'time out';
 
-  //experiment start
   request('https://kariteun-shopping.mybluemix.net/fblogout/' + endMessage.channel, function (err, response, body) {
     console.log("Processing request");
     console.log("EndMessage Channel")
     console.log(endMessage.channel);
-    console.log('error: ', err); // Handle the error if one occurred
-    console.log('statusCode: ', response && response.statusCode); // Check 200 or such
+    console.log('error: ', err);
+    console.log('statusCode: ', response && response.statusCode);
     console.log('body ', body);
   });
-  //experiment end
 
   middleware.interpret(bot, endMessage, function(){
     bot.reply(endMessage, endMessage.watsonData.output.text.join('\n'));
@@ -66,7 +48,6 @@ function endConversation(message){
 
 var processWatsonResponse = function(bot, message){
   console.log("Just heard the following message: " + JSON.stringify(message));
-  console.log(message.watsonData.output.action);
   if(message.watsonError){
     console.log("Watson Error: " + JSON.stringify(message.watsonError));
     console.log(message.watsonError);
@@ -80,16 +61,13 @@ var processWatsonResponse = function(bot, message){
     if(message.watsonData.output.action === 'check_balance'){
           var newMessage = clone(message);
           newMessage.text = 'hello';
-          //send to Watson
           middleware.interpret(bot, newMessage, function(){
-            //send results to user
             bot.reply(newMessage, newMessage.watsonData.output.text.join('\n'));
       });
     }
 
     if (message.watsonData.output.action && message.watsonData.output.action.generic_template) {
         console.log("Generic template.");
-        //setTimeout(function(){bot.reply(message, message.watsonData.output.text.join('\n\n'))},0);
         setTimeout(function(){
           var attachment = {
           "type":"template",

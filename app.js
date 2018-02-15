@@ -7,8 +7,7 @@ require('dotenv').load();
 app.use('/images', express.static(path.join(__dirname, 'images')));
 var clone = require('clone');
 var storage = require('botkit-storage-mongo')({mongoUri:'mongodb://Marponsie:Password8732!@ds147882.mlab.com:47882/boiband', tables: ['userdata']});
-var maxElapsedUnits = 900; //15 minutes
-//var maxElapsedUnits = 5; // test timeout
+var maxElapsedUnits = 900; 
 console.log("Declared maxElapsedUnits: " + maxElapsedUnits + " seconds");
 var userName;
 var userLastName;
@@ -28,38 +27,23 @@ var middleware = require('botkit-middleware-watson')({
 });
 
 module.exports = function(app) {
-  if (process.env.USE_SLACK) {
-    var Slack = require('./bot-slack');
-    Slack.controller.middleware.receive.use(middleware.receive);
-    Slack.bot.startRTM();
-    console.log('Slack bot is live');
-  }
   if (process.env.USE_FACEBOOK) {
     var Facebook = require('./bot-facebook');
     Facebook.controller.middleware.receive.use(middleware.receive);
     Facebook.controller.createWebhookEndpoints(app, Facebook.bot);
     console.log('Facebook bot is live');
   }
-  if (process.env.USE_TWILIO) {
-    var Twilio = require('./bot-twilio');
-    Twilio.controller.middleware.receive.use(middleware.receive);
-    Twilio.controller.createWebhookEndpoints(app, Twilio.bot);
-    console.log('Twilio bot is live');
-  }
-
   function getFBusername(path, callback) {
     return https.get({
         encoding: "utf8",
         host: 'graph.facebook.com',
         path: path
     }, function(response) {
-        // Continuously update stream with data
         var body = '';
         response.on('data', function(d) {
             body += d;
         });
         response.on('end', function() {
-            // Data reception is done, do whatever with it!
             var parsed = JSON.parse(body);
             console.log("Parsed: " + JSON.stringify(parsed));
             var firstname = parsed.first_name;
@@ -71,15 +55,13 @@ module.exports = function(app) {
   }
 
   function checkBalance(conversationResponse, callback) {
-    //middleware.after function must pass a complete Watson respose to callback
-    conversationResponse.context.user_name = userName; // Set context variables in watson conversation
+    conversationResponse.context.user_name = userName;
     conversationResponse.context.fbid = fb_id;
     conversationResponse.context.user_lastname = userLastName;
     conversationResponse.context.gender = userGender;
     callback(null, conversationResponse);
   }
 
-  // Customize your Watson Middleware object's before and after callbacks.
   middleware.before = function(message, conversationPayload, callback) {
     console.log("Inside Before Method: " + JSON.stringify(conversationPayload));
     replyMessage = clone(message);
@@ -114,7 +96,6 @@ module.exports = function(app) {
           console.log("Max Elapsed Units: " + maxElapsedUnits);
           console.log("Seconds Elapsed: " + secondsElapsed);
           if(secondsElapsed > maxElapsedUnits) {
-            //end conversation
             console.log("Should end the conversation.");
             Facebook.endConversation(message);
           } else {
@@ -141,10 +122,8 @@ module.exports = function(app) {
     fb_id = message.user;
     console.log("FB id of user: " + fb_id);
     
-    //experiment for username starts here
     checkBalance(conversationResponse, callback);
     console.log("Check Balance is called");
-    //experiment ends here
 
     if(typeof conversationResponse !== 'undefined' && typeof conversationResponse.output !== 'undefined'){
       if(conversationResponse.output.action === 'check_balance'){
