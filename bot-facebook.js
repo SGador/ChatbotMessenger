@@ -1,3 +1,4 @@
+
 var Botkit = require('botkit');
 var request = require('request');
 var clone = require('clone');
@@ -29,6 +30,7 @@ function endConversation(message){
   var replyMessage = clone(message);
   var endMessage = clone(message);
   endMessage.text = 'time out';
+
   request('https://kariteun-shopping.mybluemix.net/fblogout/' + endMessage.channel, function (err, response, body) {
     console.log("Processing request");
     console.log("EndMessage Channel")
@@ -37,6 +39,7 @@ function endConversation(message){
     console.log('statusCode: ', response && response.statusCode);
     console.log('body ', body);
   });
+
   middleware.interpret(bot, endMessage, function(){
     bot.reply(endMessage, endMessage.watsonData.output.text.join('\n'));
   });
@@ -45,6 +48,7 @@ function endConversation(message){
 
 var processWatsonResponse = function(bot, message){
   console.log("Just heard the following message: " + JSON.stringify(message));
+  console.log(message.watsonData.output.action);
   if(message.watsonError){
     console.log("Watson Error: " + JSON.stringify(message.watsonError));
     console.log(message.watsonError);
@@ -54,6 +58,7 @@ var processWatsonResponse = function(bot, message){
     if(typeof message.watsonData.output !== 'undefined') {
       bot.reply(message, message.watsonData.output.text.join('\n'));
     }
+
     if(message.watsonData.output.action === 'check_balance'){
           var newMessage = clone(message);
           newMessage.text = 'hello';
@@ -61,6 +66,7 @@ var processWatsonResponse = function(bot, message){
             bot.reply(newMessage, newMessage.watsonData.output.text.join('\n'));
       });
     }
+
     if (message.watsonData.output.action && message.watsonData.output.action.generic_template) {
         console.log("Generic template.");
         setTimeout(function(){
@@ -88,6 +94,7 @@ var processWatsonResponse = function(bot, message){
 };
 
 controller.on('message_received', processWatsonResponse);
+
 controller.on('facebook_postback', function(bot, message){
   console.log("Trying to respond to facebook postback");
   bot.reply(message, message.payload);
