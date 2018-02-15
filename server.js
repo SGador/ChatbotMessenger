@@ -25,6 +25,7 @@ app.post('/update', function (req, res) {
 	  console.log("------------------------------------------------------");
 	  var userid = req.body.psid;
 	  var ts = req.body.timestamp;
+	  console.log(req.body.orderData);
 	  var Facebook = require('./bot-facebook');
 	  if (Facebook.bot == null){
 	    console.log("Facebook bot is null");
