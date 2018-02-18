@@ -34,13 +34,15 @@ app.post('/update', function (req, res) {
 	    console.log("Middleware is null");
 	  }
 	  var msg = {};
-	  var text;
-	  var orderData = req.body.orderData.orderId + ";" + req.body.orderData.address + ";" + req.body.orderData.totalPrice;
+		var text;
+		var orderId = req.body.orderData.orderId;
+		var address = req.body.orderData.address;
+	  var total = req.body.orderData.totalPrice;
 	  console.log(orderData);
 	  if (req.body.text == "ADDTOCART"){
 		  text = "<watson> add to cart";
 	  }else if(req.body.text == "CHECKOUT"){
-		  text = "<watson> transaction confirmation;" + orderData;
+		  text = "<watson> transaction confirmation;" + orderId + ";" + address + ";" + total;
 	  }
 	  msg = {"text":text,"channel":userid,"user":userid,"timestamp":ts,"orderdata":req.body.orderData};
 
