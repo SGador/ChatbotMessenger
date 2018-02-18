@@ -35,15 +35,14 @@ app.post('/update', function (req, res) {
 	  }
 	  var msg = {};
 		var text;
-		var orderData = req.body.orderData;
 		var orderId = req.body.orderData.orderId;
 		var address = req.body.orderData.address;
-	  var total = req.body.orderData.totalPrice;
-	  console.log(orderData);
+	  var total = req.body.orderData.totalPrice;	
 	  if (req.body.text == "ADDTOCART"){
 		  text = "<watson> add to cart";
 	  }else if(req.body.text == "CHECKOUT"){
-		  text = "<watson> transaction confirmation;" + orderId + ";" + address + ";" + total;
+			text = "<watson> transaction confirmation;" + orderId + ";" + address + ";" + total;
+			console.log(text);
 	  }
 	  msg = {"text":text,"channel":userid,"user":userid,"timestamp":ts,"orderdata":req.body.orderData};
 
