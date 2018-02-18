@@ -35,6 +35,7 @@ app.post('/update', function (req, res) {
 	  }
 	  var msg = {};
 		var text;
+		var orderData = req.body.orderData;
 		var orderId = req.body.orderData.orderId;
 		var address = req.body.orderData.address;
 	  var total = req.body.orderData.totalPrice;
