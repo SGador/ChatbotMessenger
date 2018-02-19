@@ -41,7 +41,7 @@ app.post('/update', function (req, res) {
 	  if (req.body.text == "ADDTOCART"){
 		  msg =  {"text":"<watson> add to cart","channel":userid,"user":userid,"timestamp":ts};
 	  }else if(req.body.text == "CHECKOUT"){
-		  msg =  {"text":"<watson> add to cart","channel":userid,"user":userid,"timestamp":ts,"orderId":orderId,"address":address,"total":total};
+		  msg =  {"text":"<watson> transaction confirmation","channel":userid,"user":userid,"timestamp":ts,"orderId":orderId,"address":address,"total":total};
 	  }
 	  //msg = {"text":text,"channel":userid,"user":userid,"timestamp":ts,"orderdata":req.body.orderData};
 
