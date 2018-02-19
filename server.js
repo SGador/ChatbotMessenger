@@ -39,11 +39,11 @@ app.post('/update', function (req, res) {
 		var address = req.body.address;
 	  var total = req.body.totalPrice;	
 	  if (req.body.text == "ADDTOCART"){
-		  //msg =  {"text":"<watson> add to cart","channel":userid,"user":userid,"timestamp":ts};
-		  msg.text = '<watson> add to cart';
+		  msg =  {"text":"<watson> add to cart","channel":userid,"user":userid,"timestamp":ts};
+		  //msg.text = '<watson> add to cart';
 	  }else if(req.body.text == "CHECKOUT"){
-		  //msg =  {"text":"<watson> transaction confirmation","channel":userid,"user":userid,"timestamp":ts,"orderId":orderId,"address":address,"total":total};
-		  msg.text = '<watson> transaction confirmation ;' + orderId + ';' + address + ';' + total;
+		  msg =  {"text":"<watson> transaction confirmation","channel":userid,"user":userid,"timestamp":ts,"orderId":orderId,"address":address,"total":total};
+		  //msg.text = '<watson> transaction confirmation ;' + orderId + ';' + address + ';' + total;
 	  }
 	  //msg = {"text":text,"channel":userid,"user":userid,"timestamp":ts,"orderdata":req.body.orderData};
 
