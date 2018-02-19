@@ -39,12 +39,11 @@ app.post('/update', function (req, res) {
 		var address = req.body.address;
 	  var total = req.body.totalPrice;	
 	  if (req.body.text == "ADDTOCART"){
-		  text = "<watson> add to cart";
+		  msg =  {"text":"<watson> add to cart","channel":userid,"user":userid,"timestamp":ts};
 	  }else if(req.body.text == "CHECKOUT"){
-			text = "<watson> transaction confirmation;" + orderId + ";" + address + ";" + total;
-			console.log(text);
+		  msg =  {"text":"<watson> add to cart","channel":userid,"user":userid,"timestamp":ts,"orderId":orderId,"address":address,"total":total};
 	  }
-	  msg = {"text":text,"channel":userid,"user":userid,"timestamp":ts,"orderdata":req.body.orderData};
+	  //msg = {"text":text,"channel":userid,"user":userid,"timestamp":ts,"orderdata":req.body.orderData};
 
       Facebook.middleware.sendToWatsonAsync(Facebook.bot, msg).then(function () {
         Facebook.processWatsonResponse(Facebook.bot, msg);
